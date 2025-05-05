@@ -1,0 +1,38 @@
+apiVersion: opentofu.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: opentofu-providerconfig
+spec:
+  credentials:
+    - filename: oci-secret.tfvars.json
+      source: Secret
+      secretRef:
+        namespace: crossplane-system
+        name: oci-secret
+        key: credentials
+  configuration: |
+
+    terraform {
+      required_providers {
+        oci = {
+          source = "oracle/oci"
+          version = "6.35.0"
+        }
+      }
+
+      backend "kubernetes" {
+        secret_suffix = "providerconfig-default"
+        namespace = "crossplane-system"
+        in_cluster_config = true
+      }
+    }
+
+    provider "oci" {
+      auth = "APIKey"
+      user_ocid = "ocid1.user.oc1..aaaaaaaacsfjeeyt3i5d2i32y2vcegbmg6t3d6w6s4j5tf43tbmueioydeba"
+      tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaaour4bncy5qvbtjv74iiyvdc6bbibwj6nbdahkyhziez5bqkp45aq"
+      region = "eu-frankfurt-1"
+      fingerprint = "7a:d7:6a:ff:ec:df:05:1e:46:f8:8e:13:4d:ab:da:9f"
+      private_key = "-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDOPmKgP1CEbeYi\\nPt/fn50ZBUMqsAqhvGMcNonMQ7GtV3HOCPN4axXEhcFHdO6ijGZHg+kzv4IhHG7j\\nwCJHomQADYqOf4O6eaa+Qwflte+1lLGpRaM/Q7z6G10e7p2O03rPSxhTi5LvmRR1\\nSVkOEVHbxjV96h+3aZc96g8CXZGNKJOqKF5auhzMgr6fYVkAIjH7tX9iY+Bi0En/\\n7vkPwjzrngOF0kLt7kbJiv0VXuPS9n7wsGaySUXvflKlgi8VvUMvab4iKoDpgYTO\\nYhc2GGuLqhHdm5+GNpRmkklILWIXBj/tn834AdglVJR022YlLxC3RY9O5g41rS2k\\nUnEXrFYTAgMBAAECggEAWRgcFOulBcBP9SVCIuFZxRA/5rXrsdim2+43ctUfcSlg\\nUUgOnUttONsrFopN+Ew8dtJmMGOffFxDDwHWDSn6lwdCfrJZHnok7PYZ+EKzDbbx\\nVJVvownJHiYqAQ3FZIi4+cmP9a9Kx1RSwSPxY6FZwl4Kh51XHC1yF14AI9513QsN\\n6QCSBkwu7c2xKt7M/oSfsp64Rw2hQZpzWu7fSXk84A7mvMtMnrUiGwEzC/zc/22u\\nfi0U7k4MY3PtmSGOWz6CPZUqm3n6hSaf4tz69L7U+eKArlCm+9R0H9v3+d4eXh03\\n/E8eC/DPpAIBBSAlIh4D03HP39cMuiCzDT9Mmml8GQKBgQD8yxlbUFydKiGvoYcf\\nBgLbMACb0bz3WFVJbwXtlegNsY+JtKJ1DzhgSbxtS1ia6AWnkiR+gnUbCgkXItRd\\n/76qfQ6gkM9wbSa7IqCqKL3OvB+DxR8CSLMcbF+037zxG1TK42rJ/W9yHVEO0RE/\\nwZIoeorwQm8AACAILUYxt6virQKBgQDQ3B/igc4AmPE43vteQJo932NfVvryogHJ\\n9uXS4FfoO2foQUa5FNToljhkym6pYTEBzDLiJJt5byvRC2GDK08IkZdvjwR5ZQ9f\\npzVcSj0OLZietU51gOcbhlhg52A55QcPlpJZI8ncCVrxpC1Oi0x8ARtF2S1YeRXZ\\nGi3Sy9TzvwKBgDh6X9Xo5Ggwq4oDup6Rxz2VQe2ONHvGfneDmH12SnwUuY74jns8\\nxUmt760zcj5ZrDm+Cu1A1E0QNuu2WmAN7VlFy2jQMahampagq+iYZZ+0pA3akoz+\\nFRY6mD9e5WWwx4b0vD0YpDeImT2INCRcaP0mM7ht/0KuxHlPNCmTcZGZAoGAYjum\\nI3q50T4d9omp4KKx6PfwXR8j2IqqHLurTIuHzQpjzLEm+lX57Yr56y3q7m9wBVBt\\nfj+JgIvxJ9kae/8apQUVHLs/d3k4ydxzFH02SjzX042i4VFHYYLGfo1UjOZTc9l1\\n68cRYhRkWdLGHHMX/hrnIOsMkNgiloHhm4uTFTECgYEA0HE9Q3X+yMUUC8wlxk5H\\nOF5ZaORqku7zlkkMBOTtaeZqaE7EmUI6bekK0AdgWC9V9oInrjYmNqrvj1/Cj3XB\\neB1PNfH/ZUHqMayPXIPwlYvVUhCwqvZZeXXO1pkikXVMpuaAsZgmw4xRirA6ZOmJ\\n3+mN/i4A7qYx/wOOCtMvdVU=\\n-----END PRIVATE KEY-----"
+      config_file_profile = "DEFAULT"
+    }
