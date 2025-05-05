@@ -1,0 +1,20 @@
+apiVersion: opentofu.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: bucket
+  annotations:
+spec:
+  forProvider:
+    source: Inline
+    module: |
+      resource "oci_objectstorage_bucket" "opentofu_bucket" {
+        name = "bucket"
+        compartment_id = ""
+        namespace = ""
+        storage_tier = "Archive"
+      }
+  providerConfigRef:
+    name: opentofu-providerconfig
+  writeConnectionSecretToRef:
+    namespace: crossplane-system
+    name: bucket-connection
