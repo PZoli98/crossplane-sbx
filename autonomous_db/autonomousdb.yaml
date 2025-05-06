@@ -1,0 +1,25 @@
+apiVersion: opentofu.upbound.io/v1beta1
+kind: Workspace
+metadata:
+  name: autonomousdb
+  annotations:
+spec:
+  forProvider:
+    env:
+      - configMapKeyRef:
+          key: name
+          name: autonomousdb-configmap-somedb
+          namespace: crossplane-system
+        name: TF_VAR_name
+      - configMapKeyRef:
+          key: compartment_id
+          name: autonomousdb-configmap-somedb
+          namespace: crossplane-system
+        name: TF_VAR_compartment_id
+    module: git::https://user:token@github.com/PZoli98/terraform-modules.git//autonomous_db?ref=main
+    source: Remote
+  providerConfigRef:
+    name: opentofu-providerconfig
+  writeConnectionSecretToRef:
+    namespace: crossplane-system
+    name: bucket-connection

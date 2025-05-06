@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: autonomousdb-configmap-somedb
+data:
+  name: "db-name"
+  compartment_id: "compartment-id"

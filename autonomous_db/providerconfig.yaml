@@ -1,0 +1,36 @@
+apiVersion: opentofu.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: opentofu-providerconfig
+spec:
+  credentials:
+    - filename: oci-secret.tfvars.json
+      source: Secret
+      secretRef:
+        namespace: crossplane-system
+        name: oci-secret
+        key: credentials
+  configuration: |
+
+    terraform {
+      required_providers {
+        oci = {
+          source = "oracle/oci"
+          version = "6.35.0"
+        }
+      }
+
+      backend "kubernetes" {
+        secret_suffix = "providerconfig-default"
+        namespace = ""
+        in_cluster_config = true
+      }
+    }
+
+    provider "oci" {
+      user_ocid = ""
+      tenancy_ocid = ""
+      region = ""
+      fingerprint = ""
+      private_key = ""
+    }
