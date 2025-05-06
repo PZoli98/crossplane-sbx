@@ -3,5 +3,10 @@ kind: ConfigMap
 metadata:
   name: autonomousdb-configmap-somedb
 data:
-  name: "db-name"
-  compartment_id: "compartment-id"
+  admin_password: "ValamiNagyonErosPassword12345!"
+  compartment_id: ""
+  db_name: "autonomousdb"
+  display_name: "autonomousdb"
+  db_workload: "OLTP"
+  license_model: "LICENSE_INCLUDED"
+  cpu_core_count: "1"
